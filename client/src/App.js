@@ -11,27 +11,18 @@ function App() {
 
   // Keep track of if user is Logged in or not
   const [loggedIn, setIsLoggedIn] = useState(false);
+  
+  
 
   // Keep track of the user
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem('user') || null);
 
   // Keep track of user role
   const [role, setRole] = useState(null);
 
   const location = useLocation
 
-  useEffect(() => {
-    // auto-login user
-    fetch("http://localhost:3000/me")
-      .then((response) => response.json())
-      .then((data) => {
-        // Update the state with the response data
-        setUser(data);
-        setRole(data.role)
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
+ 
   // useEffect(() => {
   //   const loggedInUser = localStorage.getItem("user");
   //   if (loggedInUser) {
@@ -41,19 +32,49 @@ function App() {
   // }, []);
 
 
-  const handleLogin = (user) => {
+  const handleLogin = (userData) => {
     setIsLoggedIn(true);
-    console.log(user)
-    sessionStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("user", userData.token);
+    console.log(userData.user)
     console.log(loggedIn)
-    setUser(user)
+    setUser(userData.user)
   };
+
+  // useEffect(() => {
+  //   // auto-login user
+  //   fetch("http://localhost:3000/me")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       // Update the state with the response data
+  //       console.log(data);
+  //       setUser(data);
+  //       setRole(data.role)
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
+
+  // useEffect(() => {
+  //   // auto-login user
+  //   fetch("http://localhost:3000/me")
+  //     .then((response) => {
+  //       console.log("Response status:", response.status);
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("User data:", data);
+  //       setUser(data);
+  //       setRole(data.role);
+  //     })
+  //     .catch((err) => console.log("Error:", err));
+  // }, []);
+
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     // handle successful logout
+    
     setUser(null); // set user state to null
-    sessionStorage.removeItem("user")
+    localStorage.removeItem("user")
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ArticleCard from './ArticleCard';
 
-function MyArticles() {
+function MyArticles({user}) {
 
     const [articles, setArticles] = useState([]);
     const [sortBy, setSortBy] = useState("");
@@ -9,7 +9,9 @@ function MyArticles() {
 
     useEffect(() => {
         // Fetch the Articles
-        fetch("http://localhost:3000/articles")
+        fetch("http://localhost:3000/articles",
+        
+        )
         .then((response) => response.json())
         .then((data) => {
           setArticles(data);

@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+    before_action :authorize_request
     # Handle ActiveRecord Not Found exception
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
@@ -20,7 +21,7 @@ class ArticlesController < ApplicationController
 
     # POST /articles (If logged in)
     def create
-        current_user = User.find_by(session[:user_id])
+        current_user = User.find(@current_user_id)
         if current_user
             article = current_user.articles.new(article_params)
             if article.save
@@ -36,7 +37,7 @@ class ArticlesController < ApplicationController
     # PATCH /articles/:id  (If logged in)
     def update
         article = find_article
-        current_user = User.find_by(session[:user_id])
+        current_user = User.find(@current_user_id)
         if current_user && (current_user == article.user || current_user.role == "admin")
             if article.update(article_params)
                 render json: article, status: :accepted
@@ -51,7 +52,7 @@ class ArticlesController < ApplicationController
 
     # DELETE /articles/:id (Article owner or admin)
     def destroy
-        current_user = User.find_by(id: session[:user_id])
+        current_user = User.find_by(id: @current_user_id)
         article = find_article
         if current_user && (current_user == article.user || current_user.role == "admin")
             article.destroy

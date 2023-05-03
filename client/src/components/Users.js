@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import UserItem from './UserItem';
 
-function Users() {
+function Users({user}) {
 
     const [users, setUsers] = useState([]);
     const [sort, setSort] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3000/users')
+        fetch('http://localhost:3000/users',
+        {
+            headers: {
+              Authorization: `Bearer ${user}`,
+            },
+          }
+        )
             .then(res => res.json())
             .then((data) => {
                 setUsers(data)

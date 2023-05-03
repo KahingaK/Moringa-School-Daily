@@ -29,7 +29,7 @@ function Login({ handleLogin }) {
           
           if (response.ok) {
             response.json().then((data) => {
-              console.log(data.role)
+              console.log(data.username)
               handleLogin(data)
               navigate("/dashboard")
             });

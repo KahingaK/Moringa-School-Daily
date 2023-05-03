@@ -2,7 +2,7 @@ import React from 'react';
 
 function UserItem({ username, email, role}) {
 
-    let currentUser = (sessionStorage.getItem("user"));
+    let currentUser = (localStorage.getItem("user"));
     let loggedInUser = JSON.parse(currentUser);
 
   return (

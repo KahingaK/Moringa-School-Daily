@@ -3,7 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 import Dashboards from '../pages/Dashboards'
 
 function PrivateRoutes() {
-  let user = (sessionStorage.getItem("user"));
+  let user = (localStorage.getItem("user"));
 
   let auth = user
     

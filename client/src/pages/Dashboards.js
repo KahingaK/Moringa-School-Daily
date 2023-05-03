@@ -21,19 +21,10 @@ function Dashboards({ user, handleLogout }) {
 
     function handleSignout(){
         // Logout
-        fetch('http://localhost:3000/logout', {
-          method: 'DELETE',
-        })
-        .then(response => {
-          if (response.ok) {
+       
             // handle successful logout
             handleLogout();
-            
-          } else {
-            throw new Error('Logout failed');
-          }
-        })
-        .catch(error => console.error(error));
+      
     }
 
 
@@ -89,9 +80,9 @@ function Dashboards({ user, handleLogout }) {
         </div>
         <div className='p-7 text-2xl flex-1 h-screen'>
             <h1 className='pb-12'>Dashboard</h1>
-            {activeDashboard === 'feed' && <Feed />}
-            {activeDashboard === 'articles' && <Articles />}
-            {activeDashboard === 'users' && <Users />}
+            {activeDashboard === 'feed' && <Feed  user =  {user}/>}
+            {activeDashboard === 'articles' && <Articles user = {user} />}
+            {activeDashboard === 'users' && <Users user = {user} />}
         </div>
     </div>
   )

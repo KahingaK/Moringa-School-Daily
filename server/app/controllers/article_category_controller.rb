@@ -1,8 +1,8 @@
 class ArticleCategoryController < ApplicationController
-
+    before_action :authorize_request
       # POST /article_category 
       def create
-        current_user = User.find_by(session[:user_id])
+        current_user = User.find(@current_user_id)
         if current_user
             article_cat = ArticleCategory.create(article_category_params)
             if article_cat

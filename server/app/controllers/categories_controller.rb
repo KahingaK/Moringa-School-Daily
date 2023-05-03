@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+    before_action :authorize_request
 
     #GET categories 
 
@@ -10,7 +11,7 @@ class CategoriesController < ApplicationController
     #POST /categories
 
     def create 
-        current_user = User.find_by(session[:user_id])
+        current_user = User.find(@current_user_id)
         if current_user
             unless current_user.technicalwriter?
                 category = Category.create(params.permit[:name])
@@ -28,7 +29,7 @@ class CategoriesController < ApplicationController
     # DELETE /categories/:id
     
     def destroy
-        current_user = User.find_by(sessions[:id])
+        current_user = User.find(@current_user_id)
         category = Category.find(params[:id])
         if category
             unless current_user.technicalwriter?

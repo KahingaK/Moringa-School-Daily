@@ -1,9 +1,10 @@
 import React from 'react'
+import Categories from './Category'
 
 function Feed() {
   return (
-    <div>
-        <h2>Feed Page</h2>
+    <div  >
+        {/* <Categories/> */}
     </div>
   )
 }

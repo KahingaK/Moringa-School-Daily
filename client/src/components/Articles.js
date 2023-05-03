@@ -4,7 +4,7 @@ import MyArticles from './MyArticles'
 
 function Articles() {
 
-  let currentUser = (sessionStorage.getItem("user"));
+  let currentUser = (localStorage.getItem("user"));
   let loggedInUser = JSON.parse(currentUser);
 
   const [open, setOpen] = useState(true)
