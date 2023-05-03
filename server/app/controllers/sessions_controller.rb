@@ -22,9 +22,9 @@ class SessionsController < ApplicationController
     #     end
     # end
     
-    # # Delete
-    # def destroy
-    #     token.delete :user_id
-    #     head :no_content
-    # end
+    # Delete
+    def destroy
+        token.delete :user_id
+        head :no_content
+    end
 end

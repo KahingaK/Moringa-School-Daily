@@ -42,13 +42,13 @@ cat9 = Category.create!(
 )
 
 
-  # 10.times do
-  #   User.create!(
-  #     username: Faker::Name.name,
-  #     email: Faker::Internet.email,
-  #     password: 'password', # Set password directly to 'password'
-  #     role: 0
-  #   )
-  # end
+  10.times do
+    User.create!(
+      username: Faker::Name.name,
+      email: Faker::Internet.email,
+      password: 'password', # Set password directly to 'password'
+      role: 0
+    )
+  end
 
 

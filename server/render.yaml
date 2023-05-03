@@ -2,7 +2,7 @@ databases:
   - name: postgres
     ipAllowList: []
     databaseName: moringaschooldaily
-    user: jamila
+    user: ivan
 
 services:
   - type: web

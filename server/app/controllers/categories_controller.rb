@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
     #POST /categories
 
     def create 
-        current_user = User.find(@current_user_id)
+        current_user = @current_user
         if current_user
             unless current_user.technicalwriter?
                 category = Category.create(params.permit[:name])
@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
     # DELETE /categories/:id
     
     def destroy
-        current_user = User.find(@current_user_id)
+        current_user = @current_user
         category = Category.find(params[:id])
         if category
             unless current_user.technicalwriter?
