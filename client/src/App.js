@@ -16,6 +16,7 @@ function App() {
 
   // Keep track of the user
   const [user, setUser] = useState(localStorage.getItem('user') || null);
+  const [details, setDetails] = useState([])
 
   // Keep track of user role
   const [role, setRole] = useState(null);
@@ -37,7 +38,8 @@ function App() {
     localStorage.setItem("user", userData.token);
     console.log(userData.user)
     console.log(loggedIn)
-    setUser(userData.user)
+    setDetails(userData.user)
+    setUser(userData.token)
   };
 
   // useEffect(() => {
@@ -84,7 +86,7 @@ function App() {
         <Route path="/login" element={<Login handleLogin={handleLogin} />}></Route>
         <Route path="/signup" element={<Signup handleLogin={handleLogin} />}></Route>
         <Route element={<PrivateRoutes loggedIn={loggedIn} />}>
-          <Route path="/dashboard" element={<Dashboards user={user} handleLogout={handleLogout} />}></Route>
+          <Route path="/dashboard" element={<Dashboards user={user} details = {setDetails} handleLogout={handleLogout} />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

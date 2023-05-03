@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom';
 
-function AddArticle({ loggedInUser, setOpen, open}) {
+function AddArticle({ loggedInUser, setOpen, open, user}) {
 
     const navigate = useNavigate();
 
@@ -22,6 +22,10 @@ function AddArticle({ loggedInUser, setOpen, open}) {
         fetch("http://localhost:3000/articles", {
             method: "POST",
             body: data,
+            headers: {
+                Authorization: `Bearer ${user}`,
+              },
+
         })
         .then(response => response.json())
         .then(data => {

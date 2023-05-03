@@ -9,8 +9,9 @@ import Profile from '../assets/Profile.png'
 import Feed from '../components/Feed';
 import Articles from '../components/Articles';
 import Users from '../components/Users';
+import Category from '../components/Category';
 
-function Dashboards({ user, handleLogout }) {
+function Dashboards({ user, details, handleLogout }) {
 
     const [open, setOpen] = useState(true)
     const [activeDashboard, setActiveDashboard] = useState('feed');
@@ -29,7 +30,7 @@ function Dashboards({ user, handleLogout }) {
 
 
   return (
-    <div className='flex'>
+    <div className='flex justify-center items-start'>
         <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-[#101f3c] relative `}>
             <img
                 src={Control}
@@ -51,6 +52,12 @@ function Dashboards({ user, handleLogout }) {
                     <img src={Home}/>
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Feed</span>
                 </li>
+                <li className={`${activeDashboard === 'profile' ? 'bg-[rgba(255,255,255,0.17)]' : ""} pt-4 pb-4 text-white hover:text-[#F9500D] text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[rgba(255,255,255,0.17)] rounded-md`} 
+                    onClick={() => handleClick('profile')}
+                >
+                    <img src={Profile}/>
+                    <span className={`${!open && 'hidden'} origin-left duration-200`}>Profile</span>
+                </li>
                 <li className={`${activeDashboard === 'articles' ? 'bg-[rgba(255,255,255,0.17)]' : ""} pt-4 pb-4 text-white hover:text-[#F9500D] text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[rgba(255,255,255,0.17)] rounded-md`} 
                     onClick={() => handleClick('articles')}
                 >
@@ -63,6 +70,12 @@ function Dashboards({ user, handleLogout }) {
                     <img src={Person}/>
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Users</span>
                 </li>
+                <li className={`${activeDashboard === 'categories' ? 'bg-[rgba(255,255,255,0.17)]' : ""} pt-4 pb-4 text-white hover:text-[#F9500D] text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[rgba(255,255,255,0.17)] rounded-md`} 
+                    onClick={() => handleClick('categories')}
+                >
+                    <img src={Category} className="w-6 h-6" />
+                    <span className={`${!open && 'hidden'} origin-left duration-200`}>Explore</span>
+                </li>
                 {/* Logout & Profile */}
                 <li className={`${activeDashboard === 'logout' ? 'bg-[rgba(255,255,255,0.17)]' : ""} pt-4 pb-4 text-white hover:text-[#F9500D] text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[rgba(255,255,255,0.17)] rounded-md`} 
                     onClick={() => handleSignout()}
@@ -70,21 +83,20 @@ function Dashboards({ user, handleLogout }) {
                     <img src={Logout}/>
                     <span className={`${!open && 'hidden'} origin-left duration-200`}>Logout</span>
                 </li>
-                <li className={`${activeDashboard === 'profile' ? 'bg-[rgba(255,255,255,0.17)]' : ""} pt-4 pb-4 text-white hover:text-[#F9500D] text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-[rgba(255,255,255,0.17)] rounded-md`} 
-                    onClick={() => handleClick('users')}
-                >
-                    <img src={Profile}/>
-                    <span className={`${!open && 'hidden'} origin-left duration-200`}>Profile</span>
-                </li>
+             
             </ul>
         </div>
-        <div className='p-7 text-2xl flex-1 h-screen'>
-            <h1 className='pb-12'>Dashboard</h1>
+        <div className='flex-1 h-screen p-7 overflow-y-auto'>
+           
             {activeDashboard === 'feed' && <Feed  user =  {user}/>}
-            {activeDashboard === 'articles' && <Articles user = {user} />}
-            {activeDashboard === 'users' && <Users user = {user} />}
+            {activeDashboard === 'profile' && <Profile user={user} />}
+            {activeDashboard === 'articles' && <Articles user = {user} userDetails = {details}/>}
+            {activeDashboard === 'users' && <Users user = {user} userDetails = {details}/>}
+            {activeDashboard === 'categories' && <Category user={user} />}
         </div>
+        
     </div>
+    
   )
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
-function UserItem({ username, email, role}) {
+function UserItem({ id, username, email, role, handleUpgrade, handleDelete, userDetails }) {
 
-    let currentUser = (localStorage.getItem("user"));
-    let loggedInUser = JSON.parse(currentUser);
+
+    let loggedInUser = userDetails
 
   return (
     <tr className="border-b hover:bg-orange-100">
@@ -28,24 +28,28 @@ function UserItem({ username, email, role}) {
         </td>
         {/* <td className="p-3 px-5">{articles.length}</td> */}
         <td className="p-3 px-5">
-            {loggedInUser.role === 'technicalwriter' && (
+            {role === 'admin' && (
             <div className="flex">
-                <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button>
+                {/* <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button> */}
             </div>
             )}
-            {loggedInUser.role === 'admin' && (
+            {role === 'technicalwriter' && (
             <div className="flex">
-                <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button>
-                <button type="button" className="mr-3 text-sm bg-green-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Upgrade</button>
-                <button type="button" className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">Delete</button>
+                {/* <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button> */}
+                <button type="button" className="mr-3 text-sm bg-green-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" onClick={() => handleUpgrade(id, role)} >Upgrade</button>
+                <button type="button" className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" onClick={() => handleDelete(id)}>Delete</button>
             </div>
             )}
-            {loggedInUser.role  === 'moderator' && (
+            {role  === 'moderator' && (
             <div className="flex">
-                <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button>
+                {/* <button type="button" className="mr-3 text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline">View</button> */}
+                <button type="button" className="mr-3 text-sm bg-green-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" onClick={() => handleUpgrade(id ,role)} >Upgrade</button>
+                <button type="button" className="text-sm bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline" onClick={() => handleDelete(id)}>Delete</button>
             </div>
             )}
         </td>
+        
+
 
     </tr>
   )

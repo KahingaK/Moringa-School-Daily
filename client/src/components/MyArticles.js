@@ -1,69 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import ArticleCard from './ArticleCard';
+import IndividualArticle from './IndividualArticle';
 
-function MyArticles({user}) {
+function MyArticles({ user, userDetails }) {
 
     const [articles, setArticles] = useState([]);
-    const [sortBy, setSortBy] = useState("");
+
+    const [sortedArticles, setSortedArticles] = useState("");
+
+    const [showArticle, setShowArticle] = useState(false)
+
+      // Keep track of the selected recipe
+    const [selectedArticle, setSelectedArticle] = useState([]);
+
+
+    function showComponentHandler(article){
+      setSelectedArticle(article);
+      toggleContent()
+    }
+
+
+    function toggleContent(){
+      setShowArticle(!showArticle)
+      // console.log(showArticle)
+    }
   
 
     useEffect(() => {
         // Fetch the Articles
-        fetch("http://localhost:3000/articles",
-        
-        )
+        fetch("http://localhost:3000/articles",{
+          headers: {
+            Authorization: `Bearer ${user}`,
+          },
+        })
         .then((response) => response.json())
         .then((data) => {
           setArticles(data);
+
+          if(userDetails.role === "technicalwriter"){
+            let filteredArray = data.filter((item) => item.user_id === userDetails.id);
+            console.log(filteredArray);
+            setSortedArticles(filteredArray)
+          }
+          else{
+            setSortedArticles(data)
+          }      
         })
         .catch((error) => {
           console.log("Error fetching articles: ", error);
         });
     }, []);
 
-    function handleSort(sortType) {
-        setSortBy(sortType);
-    }
     
-    let sortedArticles = articles;
 
-    if (sortBy === "Pending") {
-    sortedArticles = articles.filter(
-        (article) => article.status === "Pending"
-    );
-    } else if (sortBy === "Approved") {
-    sortedArticles = articles.filter(
-        (article) => article.status === "Approved"
-    );
-    } else if (sortBy === "Rejected") {
-    sortedArticles = articles.filter(
-        (article) => article.status === "Rejected"
-    );
-    }
-
-    console.log(sortedArticles)
+    // console.log(sortedArticles)
 
   return (
     <div>
-        <nav class="flex justify-between items-center border-b border-gray-400 py-4">
-          <button className="text-black text-lg font-medium hover:text-gray-500" onClick={() => handleSort("Pending")}>Pending</button>
-          <button className="text-black text-lg font-medium hover:text-gray-500" onClick={() => handleSort("Approved")}>Approved</button>
-          <button className="text-black text-lg font-medium hover:text-gray-500" onClick={() => handleSort("Rejected")}>Rejected</button>
-        </nav>
-        {sortedArticles.length > 0 ? (
-        sortedArticles.map((article) => (
-          <ArticleCard
-            key={article.id}
-            title={article.title}
-            body={article.body}
-            image={article.image_url}
-            status={article.status}
-            likes={article.likes}
-            dislikes={article.dislikes}
-          />
-        ))
-      ) : (
-        <p>No articles</p>
+      {showArticle ? (
+        <IndividualArticle userDetails={userDetails} toggleContent={toggleContent} selectedArticle={selectedArticle} user={user} />
+      ) : 
+      (<div>
+          <div className='p-4 flex flex-wrap'>
+            {sortedArticles.length > 0 ? (
+            sortedArticles.map((article) => (
+              <ArticleCard
+                key={article.id}
+                id = {article.id}
+                title={article.title}
+                body={article.body}
+                image={article.image_url}
+                status={article.status}
+                likes={article.likes}
+                dislikes={article.dislikes}
+                article={article}
+                toggleContent={toggleContent}
+                showComponentHandler={showComponentHandler}
+              />
+            ))
+            ) : (
+              <p>No articles</p>
+            )}
+          </div>
+        </div>
       )}
     </div>
   )

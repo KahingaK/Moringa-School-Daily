@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import AddArticle from './AddArticle'
 import MyArticles from './MyArticles'
 
-function Articles() {
+function Articles({userDetails, user}) {
 
-  let currentUser = (localStorage.getItem("user"));
-  let loggedInUser = JSON.parse(currentUser);
+  let loggedInUser = userDetails;
 
   const [open, setOpen] = useState(true)
 
@@ -19,7 +18,7 @@ function Articles() {
             {open? '+AddArticle' : 'Back'}
           </button>
         </div>
-        {open? <MyArticles/> : <AddArticle loggedInUser={loggedInUser} setOpen={setOpen} open={open} />}
+        {open? <MyArticles user = {user} userDetails= {userDetails}/> : <AddArticle user = {user} loggedInUser={loggedInUser} setOpen={setOpen} open={open} />}
     </div>
   )
 }
