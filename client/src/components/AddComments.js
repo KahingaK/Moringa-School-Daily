@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function AddComments({ addComment, user, article_id }) {
+function AddComments({ addComment, user, userDetails, article_id }) {
 
   const [commentBody, setCommentBody] = useState('');
 
@@ -8,17 +8,19 @@ function AddComments({ addComment, user, article_id }) {
     event.preventDefault();
     addComment(commentBody);
     console.log(commentBody);
+    console.log(userDetails);
 
     // POST Comment
     fetch("http://localhost:3000/comments", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${user}`,
+        
       },
       body: JSON.stringify({
         content: commentBody,
         article_id: article_id,
-        user_id: user.id
+        user_id: userDetails.id
       })
     })
     .then(response => response.json())

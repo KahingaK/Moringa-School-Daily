@@ -36,6 +36,7 @@ function App() {
   const handleLogin = (userData) => {
     setIsLoggedIn(true);
     localStorage.setItem("user", userData.token);
+    localStorage.setItem("data", userData.user);
     console.log(userData.user)
     console.log(loggedIn)
     setDetails(userData.user)

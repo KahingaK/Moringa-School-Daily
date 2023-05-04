@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function Comments({ item, user, article_id }) {
+function Comments({ item, user,userDetails, article_id }) {
 
     const [showReplies, setShowReplies] = useState(false);
 
@@ -36,13 +36,14 @@ function Comments({ item, user, article_id }) {
         fetch("http://localhost:3000/comments", {
             method: "POST",
             headers: {
+                Authorization: `Bearer ${user}`,
             "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 content: reply,
                 parent_id: item.id,
                 article_id: article_id,
-                user_id: user.id
+                user_id: userDetails.id
             })
         })
         .then(response => response.json())
